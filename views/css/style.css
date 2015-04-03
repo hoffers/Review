@@ -33,11 +33,14 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
+  backface-visibility: hidden;
 }
 
 .randomPizzaContainer {
   float: left;
   display: flex;
+  width: 33.33%;
+  height: 325px;
 }
 
 .randomPizzaContainer:after {
