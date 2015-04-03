@@ -1,0 +1,195 @@
+March 2015 -
+	Google Chrome Development Tools
+		a. http://discover-devtools.codeschool.com
+		b. https://developers.google.com/web/fundamentals/
+		c. using Google PageSpeed Chrome Extension
+		d. using Google CLosure Tools
+
+
+		Add following sites as sources of instruction in final commit:
+			http://www.smashingmagazine.com/2013/06/10/pinterest-paint-performance-case-study/
+			http://www.html5rocks.com/en/tutorials/webperformance/basics/
+			https://msdn.microsoft.com/en-us/library/ff975075
+			http://www.html5rocks.com/en/tutorials/webperformance/usertiming/
+			https://css-tricks.com/the-difference-between-id-and-class/
+			http://eligeske.com/jquery/what-is-the-difference-between-document-and-window-objects-2/
+			http://www.smashingmagazine.com/2013/06/10/pinterest-paint-performance-case-study/
+			https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization
+
+		Rendering
+			http://www.html5rocks.com/en/tutorials/speed/layers/
+			Chrome rendering engine
+			https://developer.chrome.com/devtools/docs/rendering-settings
+			http://www.html5rocks.com/en/tutorials/speed/unnecessary-paints/
+			http://www.html5rocks.com/en/tutorials/speed/css-paint-times/
+			http://calendar.perfplanet.com/2009/rendering-repaint-reflow-relayout-restyle/
+
+		Transform / Translate
+			http://www.smashingmagazine.com/2012/06/21/play-with-hardware-accelerated-css/
+			http://stackoverflow.com/questions/10814178/css-performance-relative-to-translatez0
+
+		Frames
+			http://blog.chromium.org/2012/11/build-smoother-web-apps-with-chrome.html
+			http://benfrain.com/improving-css-performance-fixed-position-elements/
+
+		Document width
+			http://www.matanich.com/2013/01/07/viewport-size/
+
+		Improving Paint Performance
+			http://www.smashingmagazine.com/2013/06/10/pinterest-paint-performance-case-study/
+			http://www.html5rocks.com/en/tutorials/speed/scrolling/
+			http://www.html5rocks.com/en/tutorials/speed/rendering/
+			http://www.chromium.org/developers/design-documents/gpu-accelerated-compositing-in-chrome
+			http://benfrain.com/improving-css-performance-fixed-position-elements/
+			http://updates.html5rocks.com/2013/02/Profiling-Long-Paint-Times-with-DevTools-Continuous-Painting-Mode
+			http://deanhume.com/home/blogpost/web-page-performance---profiling-paint-times/91
+
+		Chrome developer issues
+			performance bottle-neck
+				https://developer.chrome.com/devtools/docs/demos/too-much-layout
+
+
+		SKIA (Chrome’s software rasterizer package)
+			https://sites.google.com/site/skiadocs/developer-documentation/skia-debugger
+
+		V8 Optimization
+			http://floitsch.blogspot.co.uk/2012/03/optimizing-for-v8-inlining.html
+
+
+		Testing web page efficiency
+			Browser controls -
+				refresh page(using cache if available): Ctrl + R
+				refresh page (ignoring cache) - Ctrl + Shift + R
+			http://www.webpagetest.org/
+			https://plus.google.com/+NatDuca/posts?e=-RedirectToSandbox
+			https://code.google.com/p/skia/
+			http://stevesouders.com/cuzillion/
+			http://aerotwist.com/blog/dont-guess-it-test-it/
+
+			Strategy to Minimize total bytes, minimize # of critical resources
+			(eg. files in Critical Rendering Path), shorten CRP length (# of roundtrips
+			 between browswer and server needed to render page)
+				Techniques for HTML, CSS, JavaScript
+					Minify, Compress, Cache
+				Techniques unique to CSS
+					Minimize use of render blocking resources via
+						1. Use of media queries on <link> to unblock rendering
+						2. Use Inline CSS
+				Techniques unique to JavaScript
+					Minimize use of parser blocking resources via
+						1. Deferring Javascript execution
+						2. Using async attribute on <script>
+
+			<Cmd Shft R> to do hard reload of page
+			https://www.google.com/analytics/
+			Optimizing fonts
+				http://googlewebfonts.blogspot.com/2010/09/optimizing-use-of-google-font-api.html
+				http://www.stevesouders.com/blog/2009/10/13/font-face-and-performance/
+
+			WebKit
+				Chromium port of WebKit
+
+			Optimizing DOM
+				minify
+					https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer#minification-preprocessing--context-specific-optimizations
+				text compress
+					https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer#text-compression-with-gzip
+				http cache
+					https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
+				avoid render blocking CSS
+					https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css
+				apply responsive web design methods
+					https://developers.google.com/web/fundamentals/layouts/rwd-fundamentals/
+				optimize javascript performance
+					https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript
+				window event handlers
+					https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload
+				https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript#parser-blocking-vs-asynchronous-javascript
+
+				http://discover-devtools.codeschool.com/
+
+				Illya Grigorik
+					https://www.igvita.com/
+					High Performance Browser Networking ebook
+						http://chimera.labs.oreilly.com/books/1230000000545/index.html
+		Browsers -
+			new protocol version - SPDY or HTTP/2
+			http://taligarsiel.com/Projects/howbrowserswork1.htm
+			http://andydavies.me/blog/2013/10/22/how-the-browser-pre-loader-makes-pages-load-faster/
+			http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/
+
+		Chrome DevTools
+			TimeLine
+				https://developer.chrome.com/devtools/docs/timeline
+
+				https://developers.google.com/web/fundamentals/?hl=en
+
+		Gaming
+			https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+			http://www.html5gamedevelopment.com/html5-game-tutorials/2013-12-developing-html5-games-1hr-video-presentation
+			https://www.reddit.com/r/gamedev
+
+		JS
+			http://www.w3schools.com/js/js_object_prototypes.asp
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype
+			http://javascript.info/tutorial/pseudo-classical-pattern
+			https://gun.io/blog/reimplementing-javascript/
+			http://arjanvandergaag.nl/blog/javascript-class-pattern.html
+			http://www.willvillanueva.com/an-introduction-to-pseudoclassical-instantiation-patterns-and-subclassing-in-javascript/
+
+		Browser mods
+			http://setmy.browsersize.com/
+
+		JS code testers
+			http://jshint.com/
+
+        Build process systems (do auto minifying...; helps to generate production code instead of development code)
+        	grunt
+        		1st install node.js
+        		http://24ways.org/2013/grunt-is-not-weird-and-hard/
+        		http://www.html5rocks.com/en/tutorials/tooling/supercharging-your-gruntfile/
+        		https://www.npmjs.com/package/grunt-contrib-cssmin
+        		http://www.smashingmagazine.com/2013/10/29/get-up-running-grunt/
+        		https://www.npmjs.com/package/grunt-htmlhint
+        		https://github.com/jasdeepkhalsa/gruntjs-skeleton
+        	gulp
+        	ngrok
+        	ant
+        	maven
+        	gradle
+        	brocolli
+        	brunch
+        	node.js
+
+        Minifying CSS
+        	YUI Compressor
+        	cssmin.js
+        Minifying JavaScript
+        	Closure Compiler
+        	JSMin
+        	YUI Compressor
+
+        JavaScript
+        	Functions definitions as declaration vs expression  (anonymous function)
+        		http://www.w3schools.com/js/js_function_definition.asp
+
+        Git
+        	http://gitref.org/remotes/
+
+        Grunt
+        	https://docs.npmjs.com/cli/init
+        	http://addyosmani.com/blog/image-optimization-tools/
+
+        Gulp
+        	http://markgoodyear.com/2014/01/getting-started-with-gulp/
+
+
+        Code Academies
+        	http://www.hackreactor.com/curriculum/
+
+http://forums.udacity.com/questions/100195369/expensive-layouts?sort=votes&page=3#ud884
+http://forums.udacity.com/questions/100195387/crp-diagrams#ud884
+http://addyosmani.com/blog/performance-optimisation-with-timeline-profiles/
+https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization
+http://forums.udacity.com/questions/100195399/optimized-portfolios#ud884
+
