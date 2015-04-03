@@ -1,0 +1,15 @@
+Instructor Notes
+
+The PageSpeed score of 90 is for index.html (both Mobile and Desktop scores should be at least 90).
+
+The frame rate of 60fps should be obtained for the pizza page (views/pizza.html). The file you need to study and change is views/js/main.js.
+
+Comments should be present in main.js to indicate the optimizations done for the Pizzas page.
+
+Please do not forget to update the README file and make sure you outline all of your optimizations done in main.js for the pizzas page.
+
+It's recommended to not measure performance in a virtualized environment. We recommend you measure your FPS performance in your native operating system.
+
+Below is a picture of what the target timeline should look like. Evaluators will focus their attention on the timeline rather than the FPS meter due to varying hardware factors that may affect FPS.
+
+<check file rubr-TargetTimeline.jpg>

@@ -1,0 +1,9 @@
+{
+  "name": "Target-P4-MobilePortfolio",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-image": "^0.9.6",
+    "grunt-responsive-images": "^0.1.6"
+  }
+}

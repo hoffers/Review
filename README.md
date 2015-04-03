@@ -1,35 +1,64 @@
-# Brian Buchalter's submission
-
-* Available for review at: http://bbuchalter.github.io/frontend-nanodegree-mobile-portfolio/
-* [Mobile PSI score](https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fbbuchalter.github.io%2Ffrontend-nanodegree-mobile-portfolio%2F&tab=mobile): 94
-* [Desktop PSI score](https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fbbuchalter.github.io%2Ffrontend-nanodegree-mobile-portfolio%2F&tab=desktop): 95
-* Frame performance sample from scrolling on [pizza page](http://bbuchalter.github.io/frontend-nanodegree-mobile-portfolio/views/pizza.html):
-```
-Average time to generate last 10 frames: 7.218500017188489ms
-Average time to generate last 10 frames: 2.3846000083722174ms
-Average time to generate last 10 frames: 2.222500031348318ms
-Average time to generate last 10 frames: 2.2232999792322516ms
-```
-* Time to resize pizzas: `1.6900000628083944ms`
-
-# Optimizations made for pizza.html in views/js/main.js
-* Optimization was mostly attributable to move each pizza onto it's own layer by setting `backface-visibility: hidden` in https://github.com/bbuchalter/frontend-nanodegree-mobile-portfolio/commit/0708bc226754b7b5f1578a901748b7e61aaae24f
-* Additionally, using CSS to specify position was more efficient than using JS in https://github.com/bbuchalter/frontend-nanodegree-mobile-portfolio/commit/d43ebe87845e823144f313fb57f28b708321121e
-
-## Resources Used
-* [Grading Rubric](https://www.udacity.com/course/viewer/#!/c-nd001/l-2735848561/m-2686388535)
-* [Website Performance Optimization course @ Udacity](https://www.udacity.com/course/viewer#!/c-ud884-nd)
-* [#perfmatters: 60fps layout and rendering - Chrome Dev Summit 2013 (Tom Wiltzius and Nat Duca)](https://www.youtube.com/watch?v=YyQYhhy1dZI)
-* [Profiling Long Paint Times with DevTools' Continuous Painting Mode](http://updates.html5rocks.com/2013/02/Profiling-Long-Paint-Times-with-DevTools-Continuous-Painting-Mode)
-* [Improving the CSS performance of fixed position elements](http://benfrain.com/improving-css-performance-fixed-position-elements/)
-* https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet
-
-## Honor Statement
-I hereby confirm that this submission is my work. I have cited above the origins of any parts of the submission that were taken from Websites, books, forums, blog posts, github repositories, etc. By including this in my email, I understand that I will be expected to explain my work in a video call with a Udacity coach before I can receive my verified certificate.
-
-
-
 ## Website Performance Optimization portfolio project
+
+To run :
+	For testing purposes, this portfolio directory can be loaded up
+	to a site such as github.com, which will act as the web host.
+	The steps to setup github as the webhost are provided in the
+	following site page: https://pages.github.com/
+	Once the portfolio has been uploaded to the github.io directory,
+	follow the steps below.
+	
+	1. In a web browser, load index.html.
+		eg. if github username is "jk" - http://jk.github.io/
+
+	2. To order pizza's
+			click on "Cam's Pizzeria link"
+				- click on Menu to see available pizzas
+				- click on Our Ingredients	to see ingredient list
+				- click on Locations to get addresses to stores
+				- click on Contact Us to reach us
+				- click on Pick A Pizza to select a pizza and begin the order process
+				- Use the slider to select pizza size - small, medium, large
+
+	3. To enhance your Mobile Web Development Skills
+
+	4. To enhance your Website Performance Optimization skills
+
+	5. To Build Your Own 2048
+
+
+Optimizations added:
+	The original code was modified to replace the lethargic screen updates in the
+	following ways:
+	
+	1.  Processing time
+		a.	Problem - Using the scroll bar causes slow screen updates
+			Solution - Added mods to preload all images into an array and reuse as needed
+			           thru the life of the program.  This dramatically reduces the time
+			           cost of repeatedly using document.querySelectorAll() to create an
+			           array of pizza images to be displayed on screen.
+
+			           Additional mods were made to UpdatePositions() to fine tune the
+			           time spent within the main loop in the function.
+
+		b.	Problem - Using the pizza slider to select different pizza size causes heavy
+			          processing time.
+			Solution - Modified changePizzaSizes() to fine tune time spent in
+					   main loop of function. Also using preloaded array of pizza images
+					   in lieu of call to document.querySelectorAll().
+
+
+	2.	Load time
+			Problem - PageSpeedInsights identified 2 primary causes of load time delay -
+					  very large images, and java scripts waiting for processing.
+			Solution - Images were made smaller and compressed. Java script files were
+					   inlined and external calls to java script files were given an
+					   async tag to allow parallel processing of possible js files.
+
+
+The sites I've looked into in the process of completing this project are in the file SitesRead.
+
+
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
@@ -63,7 +92,7 @@ Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
 ####Part 2: Optimize Frames per Second in pizza.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
 
 You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
 
