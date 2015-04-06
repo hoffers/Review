@@ -1,3 +1,85 @@
+### PSI analysis 3/26/15 17:29
+Mobile 70/100
+Desktop 83/100
+#### Changes made:
+1. Google analytics made "async"
+2. print.css media query added: media= "print"
+
+### PSI analysis 3/26/15 17:50
+Mobile 73/100
+Desktop 86/100
+####Changes made:
+1. style.css code moved inline, within style tags within index.html
+	Reference: https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery#CSSattributes
+
+### PSI analysis 3/26/15 18:07
+Mobile 70/100
+Desktop 86/100
+#### Changes made:
+1. Commented out web fonts link
+
+### PSI analysis 3/26/15 18:11
+Mobile 82/100
+Desktop 87/100
+#### Changes made:
+1. Resized views/images/pizzeria.jpg to a 100x75 jpg located at /img/pizzeria-sm.jpg
+
+### PSI analysis 3/26/15 18:30
+Mobile 92/100
+Desktop 95/100
+#### Changes made:
+1. Compressed pizzeria-sm.jpg and profilepic.jpg
+
+### PSI analysis 3/26/15 18:34
+Mobile 94/100
+Desktop 95/100
+#### Changes made:
+1. Took Google PSI up on its offer to optimize my files.
+They returned a zip, describing the following in the MANIFEST document.
+
+ This zip file contains optimized resources for http://181b88c7.ngrok.com/. The optimized resources are listed below in the format of: filename: url
+ * Note: We only include up to 10 MB of optimized contents. If the optimized contents of your page are larger than 10 MB, we list them in this file too, with 'NOT INCLUDED' to indicate those URLs require further optimization.
+ * css/print.css: http://181b88c7.ngrok.com/css/print.css
+ * js/perfmatters.js: http://181b88c7.ngrok.com/js/perfmatters.js
+ * image/profilepic.jpg: http://181b88c7.ngrok.com/img/profilepic.jpg
+ * image/pizzeria-sm.jpg: http://181b88c7.ngrok.com/img/pizzeria-sm.jpg
+
+
+
+## FPS Exercise - Resources & Reflections
+#### 1: I considered using jQuery to speed things up, until I read how it tends to do quite the contrary:
+http://stackoverflow.com/questions/11503534/jquery-vs-document-queryselectorall
+
+#### 2: I referenced S/O to cope with window resizing.
+http://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+
+
+
+## Last task for myself:
+### Analyze Main.js for adherance to style guidelines
+```
+// semicolon following variable declaration, without whitespace
+var pizzaIngredients = {};
+
+// No semicolon following function declaration
+function randomName() {
+  var randomNumberAdj = parseInt(Math.random() * adjectives.length);
+  var randomNumberNoun = parseInt(Math.random() * nouns.length);
+  return generator(adjectives[randomNumberAdj], nouns[randomNumberNoun]);
+}
+
+// semicolon following function expressionvar selectRandomMeat = function() {
+  var randomMeat = pizzaIngredients.meats[Math.floor((Math.random() * pizzaIngredients.meats.length))];
+  return randomMeat;
+};
+
+// No semicolon following curly braces closing control statements
+for (var i = 0; i < numberOfMeats; i++) {
+  pizza = pizza + ingredientItemizer(selectRandomMeat());
+ }
+```
+
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
