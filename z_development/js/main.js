@@ -378,7 +378,7 @@ var pizzaElementGenerator = function(i) {
   pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
   pizzaImageContainer.classList.add("col-md-6");
 
-  pizzaImage.src = "images/pizza_big.png";
+  pizzaImage.src = "img/pizza_big.png";
   pizzaImage.classList.add("img-responsive");
   pizzaImageContainer.appendChild(pizzaImage);
   pizzaContainer.appendChild(pizzaImageContainer);
@@ -513,20 +513,23 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+
   var phaseInt = document.body.scrollTop / 1250;
 
-  var items = document.getElementsByClassName('mover');
+
+  var items =document.getElementsByClassName('mover');
+
 
   // cache length as it won't change during a single loop
   var l = items.length;
 
+
   for (var i = 0; i < l; i++) {
     //Work out movement
-    var phase = Math.sin(phaseInt + i % 5) * 100;
-
+    phase = Math.sin(phaseInt + i % 5) * 100;
     // Using translate to allow faster painting and rendering.
     items[i].style.transform = 'translateX(' + phase + 'px) translateZ(0)';
-  }
+  };
   
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -551,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 200 pizza are animate
     var elem = document.createElement('img');
     elem.className = 'mover';
-    elem.src = "images/pizza.png"; // has been optimized
+    elem.src = "img/pizza.png"; // has been optimized
     elem.style.left = ((i % cols) * s) + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
