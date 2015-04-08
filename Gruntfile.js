@@ -1,166 +1,255 @@
 'use strict';
 
+var ngrok = require('ngrok');
+
 module.exports = function(grunt) {
+	require('load-grunt-tasks')(grunt);
+	var port = grunt.option('portNumber') || 8080;
+	var base = grunt.option('dirName') || '.';
 
-  var mozjpeg = require('imagemin-mozjpeg');
-  var pngquant = require('imagemin-pngquant');
-  var jpegoptim = require('imagemin-jpegoptim');
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
+		jshint: {
+			options: {
+				globals: {
+					eqeqeq: true,
+					forin: true,
+					curly: true,
+					latedef: true,
+					undef: true,
+					unused: true,
+					devel: true,
+					jQuery: true,
+					browser: true
+				}
+			},
+			files: ['js/**/*.js', 'views/**/*.js']
+		},
+		'string-replace': {
+			general: {
+				files: [{
+					expand: true,
+					src: ['evaluate/**/*.html'],
+					dest: './'
+				}],
+				options: {
+					replacements: [{
+						pattern: /\.(css|html|js)/ig,
+						replacement: function(p1) {
+							return '.min' + p1;
+						}
+					}]
+				}
+			},
+			ganalytics: {
+				files: [{
+					expand: true,
+					src: ['evaluate/**/*.html'],
+					dest: './'
+				}],
+				options: {
+					replacements: [{
+						pattern: /(analytics\.min\.js)/ig,
+						replacement: function() {
+							return 'analytics.js';
+						}
+					}]
+				}
+			}
+		},
+		dom_munger: {
+			html: {
+				options: {
+					callback: function($, file) {
+						var $pizzeriaImg = $("img").last();
+						if ($pizzeriaImg.attr("src") === "views/images/pizzeria.jpg") {
+							$pizzeriaImg.attr("src", "img/pizzeria.jpg");
+						}
+					}
+				},
+				src: './index.html',
+				dest:	'./index.html'
+			}
+		},
+		uglify: {
+			options: {
+				banner: '/*! <%= pkg.name %> by <%= pkg.author %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+			},
+			js: {
+				files: [{
+					expand: true,
+					src: ['js/**/*.js', 'views/**/*.js'],
+					dest: './evaluate',
+					ext: '.min.js'
+				}]
+			}
+		},
+		htmlmin: {
+			html: {
+				options: {
+					removeComments: true,
+					collapseWhitespace: true,
+					removeEmptyAttributes: true,
+					removeScriptTypeAttributes: true,
+					removeStyleLinkTypeAttributes: true,
+					removeOptionalTags: true,
+					minifyJS: true,
+					minifyCSS: true
+				},
+				files: [{
+					expand: true,
+					src: ['*.html', 'views/**/*.html'],
+					dest: './evaluate/',
+					ext: '.min.html'
+				}]
+			}
+		},
+		cssmin: {
+			css: {
+				files: [{
+					expand: true,
+					src: ['css/*.css', 'views/**/*.css'],
+					dest: './evaluate',
+					ext: '.min.css'
+				}]
+			}
+		},
+		responsive_images: {
+			options: {
+				engine: "im",
+				quality: 60,
+				rename: false
+			},
+			profile: {
+				options: {
+					sizes: [{width: 100}]
+				},
+				files: {
+					'./evaluate/img/pizzeria.jpg': 'views/images/pizzeria.jpg'
+				}
+			},
+			pizza: {
+				options: {
+					sizes: [{width: 360}],
+				},
+				files: {
+					'./evaluate/views/images/pizzeria.jpg': 'views/images/pizzeria.jpg'
+				}
+			}
+		},
+		imagemin: {
+			resized: {
+				options: {
+					progressive: true,
+				},
+				files: [{
+					expand: true,
+					src: ['evaluate/**/*.jpg'],
+					dest: './',
+				}]
+			},
+			notResized: {
+				options: {
+					optimizationLevel: 7,
+					progressive: true
+				},
+				files: [{
+					expand: true,
+					src: ['views/**/*.png', 'img/*.{jpg,png}'],
+					dest: 'evaluate/'
+				}]
+			}
+		},
+		copy: {
+			fonts: {
+				expand: true,
+				cwd: 'fonts/',
+				src: ['**'],
+				dest: 'evaluate/fonts/',
+				flatten: true
+			},
+			html: {
+				files: [
+					{expand: true, src: '*.html', dest: 'evaluate/', flatten: true},
+					{expand: true, src: 'views/*.html', dest: 'evaluate/views/', flatten: true}
+				]
+			},
+			js: {
+				files: [
+					{expand: true, src: 'js/*.js', dest: 'evaluate/js/', flatten: true},
+					{expand: true, src: 'views/**/*.js', dest: 'evaluate/'}
+				]
+			},
+			css:{
+				files: [
+					{expand: true, src: 'css/*.css', dest: 'evaluate/css/', flatten: true},
+					{expand: true, src: 'views/**/*.css', dest: 'evaluate/'}
+				]
+			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: port,
+					base: base
+				}
+			}
+		},
+		pagespeed: {
+			options: {
+				nokey: true,
+				locale: "en_US",
+				threshold: 70
+			},
+			desktop: {
+				options: {
+					strategy: "desktop"
+				}
+			},
+			mobile: {
+				options: {
+					strategy: "mobile"
+				}
+			}
+		}
+	});
 
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            'dist/*',
-            '!dist/.git*'
-          ]
-        }]
-      }
-    },
-    copy: {
-      dist: {
-        cwd: 'src/', expand: true, src: '**', dest: 'dist/'
-      }
-    },
-    htmlmin: {
-      dist: {
-        options: {
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          removeEmptyAttributes: true,
-          removeComments: true,
-          collapseWhitespace: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          minifyCSS: true
-        },
-        files: [{
-          expand: true,
-          src: 'dist/index.html',
-          dest: ''
-        }]
-      },
-      dist2: {
-        options: {
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          removeEmptyAttributes: true,
-          removeComments: true,
-          collapseWhitespace: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          minifyCSS: true
-        },
-        files: [{
-          expand: true,
-          src: 'dist/views/pizza.html',
-          dest: ''
-        }]
-      }
-    },
-    uglify: {
-      options: {
-        mangle: false
-      },
-      part1: {
-        files: {
-          'dist/js/perfmatters.min.js': ['src/js/perfmatters.js']
-        }
-      },
-      part2: {
-        files: {
-          'dist/views/js/main.min.js': ['src/views/js/main.js']
-        }
-      }
-    },
-    imagemin: {
-        png: {
-          options: {
-            optimizationLevel: 7
-          },
-          files: [
-            {
-              // Set to true to enable the following options…
-              expand: true,
-              // cwd is 'current working directory'
-              cwd: 'dist/img/',
-              src: ['**/*.png'],
-              // Could also match cwd line above. i.e. project-directory/img/
-              dest: 'dist/img/',
-              ext: '.png'
-            }
-          ]
-        },
-        jpg: {
-          options: {
-            fastcrush: true,
-            use: [pngquant()]
-          },
-          files: [
-            {
-              // Set to true to enable the following options…
-              expand: true,
-              // cwd is 'current working directory'
-              cwd: 'dist/',
-              src: ['**/*.jpg'],
-              // Could also match cwd. i.e. project-directory/img/
-              dest: 'dist/',
-              ext: '.jpg'
-            }
-          ]
-        }
-      },
-    cssmin: {
-      options: {
-        report:'min',
-        shorthandCompacting: false,
-        roundingPrecision: -1
-      },
-      target: {
-        files: [{
-          expand: true,
-          cwd: 'dist/',
-          src: ['css/style.min.css','views/css/style.css', 'views/css/bootstrap-grid.css'],
-          dest: 'dist/',
-          ext: '.css'
-        }]
-      }
-    },
-    uncss: {
-      dist: {
-        files: {
-          'dist/css/style.min.css': 'src/index.html'
-        }
-      }
-    },
-    processhtml: {
-      options: {
-      },
-      dist: {
-        files: {
-          'dist/index.html': ['dist/index.html']
-        }
-      },
-      dist2: {
-        files: {
-          'dist/views/pizza.html': ['dist/views/pizza.html']
-        }
-      }
-    }
-  });
+	grunt.registerTask('psi-ngrok', 'Run pagespeed with ngrok', function() {
+		if (!grunt.option('dirName')) {
+			var msg = "\nOption '--dirName' was not used:\n" +
+				"Thus will run tests in the directory of Gruntfile.js.\n" +
+				"To run on different folder - type:\n" +
+				"grunt webspeed --dirName=<full\\path\\to\\folder\\" +
+				"with\\index.html>\n" +
+				"or use relative one to Gruntfil.js directory.\n";
+			grunt.log.write(msg['yellow'].bold);
+		}
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-htmlmin');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
-  grunt.loadNpmTasks('grunt-uncss');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-processhtml');
+		var done = this.async();
 
-  grunt.registerTask('default', ['clean','copy', 'uglify','imagemin','uncss','cssmin','processhtml','htmlmin']);
-};
+		ngrok.connect(port, function(err, url) {
+			if (err !== null) {
+				grunt.fail.fatal(err);
+				return done();
+			}
+			grunt.config.set('pagespeed.options.url', url);
+			grunt.task.run('pagespeed');
+			done();
+		});
+	});
+
+	grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-responsive-images');
+	grunt.loadNpmTasks('grunt-contrib-htmlmin');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-dom-munger');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-connect');
+
+	grunt.registerTask('webspeed', ['connect', 'psi-ngrok']);
+	grunt.registerTask('default', ['jshint', 'dom_munger', 'uglify', 'htmlmin', 'cssmin',
+		'responsive_images', 'imagemin', 'copy', 'string-replace']);
+}

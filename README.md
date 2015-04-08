@@ -1,64 +1,37 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+### Part 1. Optimizing PageSpeed results.
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+Majority of optimization procedures for index.html was done using Grunt and
+tasks described in Gruntfile.js. But first:
+	- all CSS rules were in-lined and precise dimensions were added to images;
+	- @font-face rules were added for web fonts;
+	- async property was added to Google analytics script;
+	- media type 'print' was added to print.css style sheet reference.
 
-Instructions:
-- Click on "index.html" in the "dist" folder to open up the optimized website.
+Then, using Grunt:
+	- two images of appropriate sizes were created out of views/img/pizzeria.jpg,
+	one for index.html, and one for views/pizza.html;
+	- reference to pizzeria image in index.html was modified to point to the correct file;
+	- all images were minified;
+	- were created minified versions of all HTML, CSS and JavaScript files
+	- links inside HTML documents were changed to point to minified assets (style sheets,
+	site pages, scripts), except for Google analytics;
+	- "un-uglified" assets were also included;
+	- tests were ran to ensure above 90 PagesPeed scores for both mobile and Desktop
+	strategies.
 
-Steps for optimizing PageSpeed Insights Score for index.html
-1. Optimization process was automated using Grunt and Plugins
 
-2. Optimizing Render Blocking JS and CSS: this was done by minifying .js and .css files, combining them into combined files and by removing unused css. Then the css styles where inlined into index.html. Plug-ins used: 'grunt-contrib-uglify' (minify JS), 'grunt-contrib-uncss' (remove unused CSS), 'grunt-css-min' (minify css), 'grunt-processhtml' (inline css and change paths in html)
+### Part 2. Optimizing pizza.html.
 
-Appart from this, asyncs were added for javascripts and a media="print", for the print.css file.
+In views/js/main.js:
+	-	got rid of all functions inside resizePizzas, and used switch to figure out new size
+	of pizza;
+	- reduced number of moving pizzas to 20;
+	- took the calculation of bodyScroll outside of the loop;
+	- each time updatePositions runs it creates phases array with 5 distinct values based on
+	bodyScroll value, instead of calculating phase inside the for loop.
+	- comments were added.
 
-3. Optimize Images: for this, I used 'grunt-contrib-imagemin'. The pizzeria.jpg JPEG file was optimized by resizing the image first, using Photoshop.
-
-4. Other tools used: 'grunt-contrib-html' (to minify html), 'grunt-contrib-clean' (clean the dist directory),'grunt-contrib-copy' (copy files into dist folder), 'grunt-processhtml' (automatically change js and css file paths)
-
-5. Optimized use of webfonts. Inlined the style for the font in the html file.
-
-Resources used for Grunt
-
-1. Team Treehouse Courses: "Up and Running With Grunt". http://teamtreehouse.com/.
-2. Book: "Mastering Grunt" by Daniel Li. Packt Publishing. 2014.
-3. Websites:
-- https://github.com/gruntjs/grunt-contrib-uglify
-- https://www.npmjs.com/package/grunt-processhtml
-- https://github.com/addyosmani/grunt-uncss
-- https://github.com/gruntjs/grunt-contrib-cssmin
-- https://github.com/gruntjs/grunt-contrib-imagemin
-- http://www.sitepoint.com/5-grunt-tasks-improve-performance-website/
-- http://xdamman.com/website-optimization-grunt-uncss
-- http://www.webfoobar.com/node/11
-
-General Resources used:
-1.Book: "Even Faster Web Sites" by Steve Souders. O'Reilly Media. 2009.
-2. Websites:
-- https://www.igvita.com/2014/01/31/optimizing-web-font-rendering-performance/
-- http://www.hongkiat.com/blog/optimize-google-webfonts/
-
-####Part 2: Optimize Frames per Second in pizza.html
-
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
-
-Instructions:
-- Click on "index.html" in the "dist" folder to open up the optimized website. Then, click on the last link that says: "Cam's Pizzeria" to open up the Pizzeria Website.
-
-### Optimization Steps
-The steps are detailed in main.js. Basically unnecessary code was removed from the loops, and the loops where replaced with Duff’s Device patterns. More information about this patter is given in the main.js file. This was all from the book, "Even Faster Websites" by Steve Souders. Information in Pg. 97 of Chapter 7: Writing Efficient JavaScript.
-
-The optimizations where perfomed in changePizzaSizes() and updatePositions()functions. Reading through the discussion forums, it was confirmed that these had to be the ones changed. The function that generates the sliding pizzas was also modified to generate less than 200 pizzas.
-
-Other websites used:
-- http://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/
-- http://ryanmorr.com/abstract-away-the-performance-faults-of-queryselectorall/
-
-Further optimization was done using grunt for:
-
-1. grunt-contrib-uglify (minify JS)
-2. grunt-contrib-cssmin (minify css)
-3. grunt-contrib-imagemin (minify images)
-4. grunt-contrib-processhtml (automatically change file paths for .css and .js files)
+Note: pizza.html was also optimized to reach above 90 PageSpeed scores. Because
+	a script was appended to the body to eliminate bootstraps renderblocking, PageSpeed asks to "Size content to viewport", but images actually render fine, mobile devices inclusive.
